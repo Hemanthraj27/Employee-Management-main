@@ -5,7 +5,7 @@ const updateEmployeeById = async (req, res) => {
   try {
     const emp_id = req.params.emp_id;
     const employeeData = req.body;
-    const updatedEmployee = await Employee.findOneAndUpdate(
+    const updatedEmployee = await Employee.updateOne(
       { emp_id },
       employeeData,
       { new: true }
