@@ -1,3 +1,4 @@
+//employeeModel.js
 import { Schema, model } from 'mongoose';
 
 const employeeSchema = new Schema({
