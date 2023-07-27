@@ -1,11 +1,6 @@
 //routes.js
 import express from 'express';
-
-import {
-   updateEmployeeById, 
-   deleteEmployeeById,
-} from '../Controller/employeeConroller.js'
-
+import { updateEmployeeById , deleteEmployeeById } from '../Controller/employeeConroller.js';
 const router = express.Router();
 
 // Update user

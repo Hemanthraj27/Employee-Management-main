@@ -1,12 +1,13 @@
 import Employee from '../Model/employeeModel.js';
+import { validateUpdateEmployee, validateDeleteEmployee } from '../Requests/request.js';
 
 // Update employee by ID
 const updateEmployeeById = async (req, res) => {
   try {
-    const emp_id = req.params.emp_id;
-    const employeeData = req.body;
+    const employeeData = await validateUpdateEmployee(req);
+
     const updatedEmployee = await Employee.findOneAndUpdate(
-      { emp_id },
+      { emp_id: employeeData.emp_id },
       employeeData,
       { new: true }
     );
@@ -18,16 +19,17 @@ const updateEmployeeById = async (req, res) => {
     console.log('Employee updated:', updatedEmployee);
     res.status(200).json({ message: 'Employee updated successfully', employee: updatedEmployee });
   } catch (error) {
-    console.error('Error updating employee:', error);
-    res.status(500).json({ error: 'Failed to update employee' });
+    console.error('Error updating employee:', error.message); // Log the error message
+    res.status(400).json({ error: error.message }); // Send the error message in the response
   }
 };
 
 // Delete employee by ID
 const deleteEmployeeById = async (req, res) => {
   try {
-    const emp_id = req.params.emp_id;
-    const deletedEmployee = await Employee.findOneAndDelete({ emp_id });
+    const employeeData = await validateDeleteEmployee(req);
+
+    const deletedEmployee = await Employee.findOneAndDelete({ emp_id: employeeData.emp_id });
 
     if (!deletedEmployee) {
       return res.status(404).json({ message: 'Employee not found' });
@@ -36,8 +38,8 @@ const deleteEmployeeById = async (req, res) => {
     console.log('Employee deleted:', deletedEmployee);
     res.status(200).json({ message: 'Employee deleted successfully', employee: deletedEmployee });
   } catch (error) {
-    console.error('Error deleting employee:', error);
-    res.status(500).json({ error: 'Failed to delete employee' });
+    console.error('Error deleting employee:', error.message); // Log the error message
+    res.status(400).json({ error: error.message }); // Send the error message in the response
   }
 };
 
