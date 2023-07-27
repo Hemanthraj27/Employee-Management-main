@@ -17,9 +17,10 @@ import { body, param, validationResult } from 'express-validator';
     body('age').isInt({ min: 18, max: 99 }).withMessage('Age must be between 18 and 99'),
     body('date_of_join').isDate().withMessage('Invalid date format'),
     body('dept_id').isInt().withMessage('Department ID must be an integer'),
-    body('dept_name').notEmpty().withMessage('Department name is required'),
+    body('dept_name').isString().notEmpty().withMessage('Department name is required'),
     body('role_id').isInt().withMessage('Role ID must be an integer'),
-    body('role_name').notEmpty().withMessage('Role name is required'),
+    body('role_name').isString().notEmpty().withMessage('Role name is required'),
+    body('is_active_flag').isBoolean().withMessage('is active must be a boolean (true or false)'),
   ];
 
   // Run validations using the validation middleware
